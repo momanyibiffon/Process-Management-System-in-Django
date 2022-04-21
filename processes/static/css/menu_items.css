@@ -1,0 +1,24 @@
+.collection-item {
+  border: none;
+  outline: none;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+.active, .collection-item:hover {
+  background-color: #e3f2fd;
+  transition: all .5s;
+}
+#menu_items li a:hover{
+    transition: all .2s;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/****************other styles*************/
+
+/*add new button on each page*/
+.btn-floating:hover{
+    border-radius: 1px;
+    transform: rotate(90deg);
+}
+

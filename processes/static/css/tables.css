@@ -1,0 +1,54 @@
+table{
+    font-size: 14px;
+}
+table thead{
+    background-color: white;
+}
+table thead tr{
+
+}
+table thead tr th{
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid lavender;
+    background-color: #e3f2fd;
+}
+table tbody tr td{
+    border: 1px solid lavender;
+}
+table tbody tr td a{
+    font-size: 14px;
+}
+
+
+/*edit and delete buttons*/
+table tbody tr td a i.material-icons{
+    transition: all .3s;
+    padding: 8px;
+    font-size: 20px;
+    border: 1px solid lavender;
+    border-radius: 99px;
+}
+table tbody tr td a i.material-icons:hover{
+    border: 1px solid lavender;
+    border-radius: 5px;
+    background-color: lavender;
+}
+
+/*pagination*/
+.pagination{
+    background-color: #e3f2fd;
+}
+
+.pagination .step-links a{
+    border-radius: 10px;
+    font-size: 10px;
+    margin: 5px;
+    transition: all .5s;
+}
+.pagination .step-links a:hover{
+    border-radius: 5px;
+    opacity: .6;
+}
+
+

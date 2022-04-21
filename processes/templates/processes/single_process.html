@@ -1,0 +1,135 @@
+{% extends 'processes/base_layout.html' %}
+
+{% block title %}process{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col s1"></div>
+    <div class="col s10">
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }} card-panel"{% endif %}>
+                <!-- <b>{{ title }}:</b> -->
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+
+        <h5 class="card-panel white darken-2">
+            {{ title }}
+            {{ process_id }}: 
+            {% if ps_details.status == 'running' %}
+            <span class="btn waves-effect waves-light green lighten-1" style="text-transform: capitalize;">
+                {{ ps_details.status }}
+            </span>
+            {% elif ps_details.status == 'stopped' %}
+            <span class="btn waves-effect waves-light red lighten-1" style="text-transform: capitalize;">
+                {{ ps_details.status }}
+            </span>
+            {% endif %}
+        </h5>
+
+        {% endif %}
+
+        <div class="row">
+            
+            <div class="col s4">
+
+                <h6><i class="material-icons">settings</i></h6>
+
+                <div class="collection">
+                    <!-- <a href="" class="collection-item black-text">
+                        <i class="material-icons">create</i>
+                        Create new process
+                    </a> -->
+                    {% if ps_details.status == 'running' %}
+                    <a href="{% url 'processes:suspend' %}?p_id={{ ps_details.pid }}" class="collection-item black-text suspend" name="{{ ps_details.pid }}">
+                        <i class="material-icons">pause</i>Suspend process
+                    </a>
+                    {% else %}
+                    <a href="{% url 'processes:resume' %}?p_id={{ ps_details.pid }}" class="collection-item black-text resume" name="{{ ps_details.pid }}">
+                        <i class="material-icons">play_arrow</i>
+                        Resume process
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'processes:terminate' %}?p_id={{ ps_details.pid }}" class="collection-item black-text terminate" name="{{ ps_details.pid }}">
+                        <i class="material-icons">stop</i>
+                        Terminate process
+                    </a>
+                    <a href="{% url 'processes:index' %}" class="collection-item black-text">
+                        <i class="material-icons">donut_small</i>
+                        All processes
+                    </a>
+                </div>
+
+            </div>
+            <div class="col s8">
+                
+                <table>
+                    <tr>
+                        <td><b>Name</b></td>
+                        <td>{{ ps_details.name }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>ID</b></td>
+                        <td>{{ ps_details.pid }}</td>                        
+                    </tr>
+                    <tr>
+                        <td><b>Status</b></td>
+                        {% if ps_details.status == 'stopped' %}
+                        <td class="red-text" style="text-transform: capitalize;">{{ ps_details.status }}</td>
+                        {% else %}
+                        <td class="green-text" style="text-transform: capitalize;">{{ ps_details.status }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><b>Create time</b></td>
+                        <td>{{ create_time }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>CPU Times</b></td>
+                        <td>{{ ps_details.cpu_times }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>CPU Percent</b></td>
+                        <td>{{ ps_details.cpu_percent }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>PPID</b></td>
+                        <td>{{ ps_details.ppid }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Num of threads</b></td>
+                        <td>{{ ps_details.num_threads }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Children</b></td>
+                        {% if ps_details.children %}:
+                        <td>{{ ps_details.children }}</td>
+                        {% else %}
+                        <td>No child processes</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><b>Memory Information</b></td>
+                        <td>{{ ps_details.memory_info }}</td>
+                    </tr>
+                </table>
+
+
+                
+
+            </div>
+            
+        </div>
+    </div>
+    <div class="col s1"></div>
+    
+</div>
+
+{% endblock %}
+

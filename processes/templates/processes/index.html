@@ -1,0 +1,92 @@
+{% extends 'processes/base_layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="row" style="background-image: url('../../static/static_media/cpu.jpg'); background-repeat: no-repeat; background-size: cover; background-attachment: fixed; ">
+    <div class="col s1"></div>
+
+    <div class="col s10 center index_main_section">
+        
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }} card-panel"{% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% endif %}
+        
+        <div class="row">
+            
+            <div class="col s3 side_a">
+                <div class="row navbar-fixed">
+                    <h4>{{ title }}</h4>
+                    
+                    <!-- <img src="{% static 'static_media/cpu.jpg' %}" alt="" style="width: 150%; height: auto;"> -->
+
+                    
+
+                </div>
+            </div>
+            <div class="col s9 side_b">
+                <div class="card-panel">
+
+                    <table id="processesTable" class="table striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Process name</th>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                  
+                        <tbody>
+                            {% for p in all_processes %}
+                            <tr title="Click to manage process {{ p.pid }}">
+                                <td><a href="{% url 'processes:single_process' %}?p_id={{ p.pid }}" class="black-text">{{ p.name }}</a></td> 
+                                
+                                <td><a href="{% url 'processes:single_process' %}?p_id={{ p.pid }}" class="black-text">{{ p.pid }}</a></td>
+                                
+                                {% if p.status == 'running' %}           
+                                <td style="text-transform: capitalize;"><span class="green-text">{{ p.status }}</span></td>
+                                {% elif p.status == 'stopped' %}           
+                                <td style="text-transform: capitalize;"><span class="red-text">{{ p.status }}</span></td>
+                                {% endif %}
+                                
+                                <td>
+                                    {% if p.status == 'running' %}           
+                                    <a href="{% url 'processes:suspend' %}?p_id={{ p.pid }}" class="suspend" title="Suspend"><i class="material-icons">pause</i></a>
+                                    {% elif p.status == 'stopped' %}           
+                                    <a href="{% url 'processes:resume' %}?p_id={{ p.pid }}" class="resume" title="Resume"><i class="material-icons" style="color:green;">play_arrow</i></a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'processes:terminate' %}?p_id={{ p.pid }}" class="terminate" title="Terminate"><i class="material-icons" style="color:red;">delete</i></a>
+                                </td>
+                                <td><a href="{% url 'processes:single_process' %}?p_id={{ p.pid }}"><i class="material-icons" title="View" style="color:grey;">remove_red_eye</i></a></td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        
+    
+    
+    </div>
+    <div class="col s1"></div>
+</div>
+
+
+{% endblock %}
